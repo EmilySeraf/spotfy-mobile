@@ -1,4 +1,8 @@
-app.post('/registro', async function(req,res) {
+import { User } from '../db.js'
+import bcryptjs from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+
+const registro_funcao = async function(req,res) {
     try{
         const{nome, sobrenome, email, senha, dataNascimento} = req.body
         if(! nome || ! sobrenome || ! email || ! senha || ! dataNascimento){
@@ -21,4 +25,46 @@ app.post('/registro', async function(req,res) {
     }catch(erro){
         console.log(erro)
     }
-})
+}
+
+const login_funcao = async function (req, res) {
+    
+        try {
+            const { email, senha } = req.body
+            if (!email || !senha) {
+                res.status(406).send('todos os campos devem ser preenchidos')
+                return
+            }
+            const usuario = await User.findOne({ where: { email: email } })
+            if (!usuario) {
+                res.status(404).send('este usuario não está cadastrado')
+                return
+            }
+            const senhaCorreta = bcryptjs.compareSync(senha, usuario.senha)
+            if(!senhaCorreta) {
+                res.status(403).send('senha incorreta')
+                return
+            }
+            const token = jwt.sign(
+                {
+                    nome:usuario.nome,
+                    email: usuario.email,
+                    status: usuario.status
+                },
+                'chavecriptografiasupersegura',
+                {
+                    expiresIn: "30d"
+                }
+            )
+
+            console.log(token) 
+    
+            res.status(200).send({msg: 'voce foi logado', token: token})
+            
+    } catch (erro) {
+            console.log(erro)
+            res.status(500).send('houve um problema')
+        }
+}
+
+export {registro_funcao,login_funcao}
