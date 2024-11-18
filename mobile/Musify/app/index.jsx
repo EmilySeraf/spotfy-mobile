@@ -14,7 +14,7 @@ export default function FullStack() {
             return;
         }
          try {
-            const response = await fetch('http://localhost:8000/login/', {
+            const response = await fetch('http://localhost:8000/autenticacao/login/', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -35,7 +35,7 @@ export default function FullStack() {
                 alert('Senha incorreta');
                 return
             }
-            router.push('/cadastro')
+            router.push('/perfil')
     
         } catch (error) {
             console.error('Erro:', error);
@@ -64,6 +64,7 @@ export default function FullStack() {
                     <Pressable onPress={() => { }}>
                         <Text style={styles.esqueciSenha}>Esqueci a senha!</Text>
                     </Pressable>
+
                     <Pressable style={styles.botao} onPress={handleLogin}>
                         <Text style={styles.textoBotao}>Acessar</Text>
                     </Pressable>

@@ -24,6 +24,7 @@ const registro_funcao = async function(req,res) {
         res.status(201).send('ok, usuario criado')
     }catch(erro){
         console.log(erro)
+        res.status(500).send('Erro no servidor')
     }
 }
 

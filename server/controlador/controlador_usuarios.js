@@ -1,5 +1,4 @@
-import {User} from '../db.js'
-
+import { User } from '../db.js'
 
 const pegar_usuario_funcao = async (req, res) => {
     const id_requisicao = req.params.id;
@@ -19,5 +18,27 @@ const pegar_usuario_funcao = async (req, res) => {
     }
 }
 
-export {pegar_usuario_funcao}
+const salvar_foto = async (req, res) => {
+    const { foto } = req.body
+    const { email } = req.params
+    try {
+        if (!foto) {
+            res.status(400).send('o campo deve ser preenchido')
+            return
+        }
+        const usuario = await User.findOne({ where: { email: email } })
+
+        if (!usuario) {
+            res.status(404).send('usuario não encontrado')
+            return
+        }
+        await usuario.update({ foto });
+        res.status(200).send('foto salva')
+    } catch(error) {
+        console.log(error)
+        res.status(500).send('erro no servidor')
+    }
+};
+
+export {pegar_usuario_funcao,salvar_foto}
 

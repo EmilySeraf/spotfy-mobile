@@ -13,7 +13,7 @@ export default function Cadastro() {
 
     const handleLogin = async () => {
         try {
-            const response = fetch('http://localhost:8000/registro', {
+            const response = fetch('http://localhost:8000/autenticacao/registro', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
