@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TextInput, Pressable } from 'react-native';
 import { Link, useRouter } from 'expo-router';
+import { AppContext } from '../scripts/appContext';
 
 export default function FullStack() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const { userInfo, setUserInfo } = useContext(AppContext)
+
 
     const router = useRouter()
 
@@ -26,7 +29,8 @@ export default function FullStack() {
                 })
             });
     
-            console.log(response)
+            const data = await response.json();
+            setUserInfo(data.userInfo)
             if (response.status === 404) {
                 alert('Email não encontrado');
                 return
@@ -35,7 +39,8 @@ export default function FullStack() {
                 alert('Senha incorreta');
                 return
             }
-            router.push('/perfil')
+
+            router.push('/home')
     
         } catch (error) {
             console.error('Erro:', error);
