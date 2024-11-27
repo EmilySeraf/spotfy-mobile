@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, TextInput, Moda
 import * as ImagePicker from 'expo-image-picker';
 import { AppContext } from '../../scripts/appContext.js';
 import { Ionicons } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 
 export default function ProfileScreen() {
   const [profileImage, setProfileImage] = useState(null);
@@ -108,12 +109,12 @@ return (
         placeholder="Pesquisar"
         placeholderTextColor="#ccc"
       />
+      <Link href="../home">
       <Ionicons name="home-outline" size={20} color="#FFFFFF" />
+      </Link>
     </View>
 
     <Text style={styles.welcomeText}>Seja bem-vindo {userInfo.nome}!</Text>
-
-    
 
     <View style={styles.profileContainer}>
       <TouchableOpacity
@@ -138,6 +139,10 @@ return (
           value={bio}
           onChangeText={(text) => setBio(text)}
         />
+        <Text style={styles.infos}>Email: {userInfo.email}</Text>
+        <Text style={styles.infos}>Data Nasc: {userInfo.dataNascimento}</Text>
+        <Text style={styles.infos}>Nome Usuário: {userInfo.nome}</Text>
+
         <TouchableOpacity
           onPress={() => setIsModalOpen(true)}
           style={styles.changePasswordButton}
@@ -218,12 +223,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 20,
     fontWeight: 'bold', 
-    paddingEnd: 20,
+    paddingEnd: 30,
   },
   profileContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 20,
+    marginTop: 15, 
     marginBottom: 30,
   },
   profileImageContainer: {
@@ -234,7 +240,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 20,
-    
+    marginTop: -120, 
   },
   profileImage: {
     width: 120,
@@ -253,6 +259,7 @@ const styles = StyleSheet.create({
     color: '#000',
     height: 50,
     width: '100%', 
+    marginTop: 20
     
   },
   saveIconContainer: {
@@ -305,4 +312,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
   },
+    infos:{
+      fontSize: 16,
+      marginTop: 6,
+      color: '#fff'
+    }
 });

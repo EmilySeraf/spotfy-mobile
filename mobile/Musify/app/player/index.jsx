@@ -22,8 +22,8 @@ const PlayerScreen = () => {
         }}
         style={styles.albumImage}
       />
-      <Text style={styles.songTitle}>Song Title</Text>
-      <Text style={styles.artist}>Artist Name</Text>
+      <Text style={styles.songTitle}>Virginia Beach</Text>
+      <Text style={styles.artist}>Drake</Text>
 
       {/* Controls */}
       <View style={styles.controls}>
